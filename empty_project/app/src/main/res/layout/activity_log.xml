@@ -42,19 +42,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.131" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="70dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="25dp"
-        android:text="ON"
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="61dp"
+        android:layout_height="32dp"
+        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.603" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/sendBtn"
+        android:layout_width="70dp"
+        android:layout_height="36dp"
+        android:onClick="onViewClicked"
+        android:text="전송"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.923"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.607" />
+
+    <Button
+        android:id="@+id/toggleBtn2"
         android:layout_width="69dp"
         android:layout_height="37dp"
+        android:onClick="onViewClicked"
         android:text="ON"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,9 +81,10 @@
         app:layout_constraintVertical_bias="0.132" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/toggleBtn1"
         android:layout_width="69dp"
         android:layout_height="37dp"
+        android:onClick="onViewClicked"
         android:text="ON"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,5 +92,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.061" />
+
+    <TextView
+        android:id="@+id/logText"
+        android:layout_width="103dp"
+        android:layout_height="41dp"
+        android:text="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.155"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.837" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

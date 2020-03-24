@@ -27,8 +27,16 @@ public class MqttService extends Service {
     String clientId;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        String url = intent.getStringExtra("url");
+        String port = intent.getStringExtra("port");
+        String clientId = intent.getStringExtra("clientId");
+        connectTry(url, port, clientId);
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void connectTry(String url, String port, String clientId) {
 
         mqttAndroidClient = new MqttAndroidClient(this,
                 url + port,
@@ -76,6 +84,14 @@ public class MqttService extends Service {
             public void deliveryComplete(IMqttDeliveryToken token) {
             }
         });
+
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+
 
     }
 

@@ -27,6 +27,13 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    static private int qos;
+    static private String topic;
+    static private MemoryPersistence persistence;
+
+    static MqttAndroidClient mqttAndroidClient;
+
+
     static TextView resultView = null;
     static private MqttClient sampleClient;
 
@@ -38,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.nameText)
     TextView nameText;
+
+    @BindView(R.id.resultText)
+    TextView resultText;
 
 
 
@@ -73,25 +83,104 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button2:
                 break;
             case R.id.connectTry:
+                resultText.setText("Connecting..");
                 // log 화면으로 가기 위한 인텐트
 //                Intent logIntent = new Intent(MainActivity.this, LogActivity.class);
 //                MainActivity.this.startActivity(logIntent);
 
                 String url = "tcp://m16.cloudmqtt.com";
-                String port = portText.getText().toString();
+                //String url = "tcp://" + ipText.getText();
+
+                //String port = portText.getText().toString();
+                String port = "14593";
+
+                // String clientId = nameText.getText().toString();
                 String clientId = "uztrfyhg";
 
-                Intent mqttIntent = new Intent(MainActivity.this, MqttService.class);
-                mqttIntent.putExtra("url",url);
-                mqttIntent.putExtra("port",port);
-                mqttIntent.putExtra("clientId",clientId);
-                startService(mqttIntent);
+                mqttAndroidClient = new MqttAndroidClient(this,
+                        url + ":" + port,
+                        clientId);
+                try {
+                    IMqttToken token = mqttAndroidClient.connect(getMqttConnectionOption());    //mqtttoken 이라는것을 만들어 connect option을 달아줌
+                    token.setActionCallback(new IMqttActionListener() {
+                        @Override
+                        public void onSuccess(IMqttToken asyncActionToken) {
+                            mqttAndroidClient.setBufferOpts(getDisconnectedBufferOptions());    //연결에 성공한경우
+                            Log.e("Connect_success", "Success");
+                            Intent intent = new Intent(MainActivity.this, LogActivity.class);
 
 
+                            try {
+                                mqttAndroidClient.subscribe("kss", 0);   //연결에 성공하면 jmlee 라는 토픽으로 subscribe함
+                                startActivity(intent);
+                            } catch (MqttException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
+                        @Override
+                        public void onFailure(IMqttToken asyncActionToken, Throwable exception) {   //연결에 실패한경우
+                            Log.e("connect_fail", "Failure " + exception.toString());
+                            resultText.setText("Connect fail!");
+                        }
+                    });
+
+                } catch (
+                        MqttException e) {
+                    e.printStackTrace();
+                }
+
+                mqttAndroidClient.setCallback(new MqttCallback() {  //클라이언트의 콜백을 처리하는부분
+                    @Override
+                    public void connectionLost(Throwable cause) {
+                    }
+
+                    @Override
+                    public void messageArrived(String topic, MqttMessage message) throws Exception {    //모든 메시지가 올때 Callback method
+                        if (topic.equals("jmlee")) {     //topic 별로 분기처리하여 작업을 수행할수도있음
+                            String msg = new String(message.getPayload());
+                            resultView.setText(msg);
+                            Log.e("arrive message : ", msg);
+                        }
+                    }
+
+                    @Override
+                    public void deliveryComplete(IMqttDeliveryToken token) {
+                    }
+                });
+
+                resultText.setText("Connect fail! (end)");
                 break;
+
+//                Intent mqttIntent = new Intent(MainActivity.this, MqttService.class);
+//                mqttIntent.putExtra("url",url);
+//                mqttIntent.putExtra("port",port);
+//                mqttIntent.putExtra("clientId",clientId);
+//                startService(mqttIntent);
         }
     }
+
+    private DisconnectedBufferOptions getDisconnectedBufferOptions() {
+        DisconnectedBufferOptions disconnectedBufferOptions = new DisconnectedBufferOptions();
+        disconnectedBufferOptions.setBufferEnabled(true);
+        disconnectedBufferOptions.setBufferSize(100);
+        disconnectedBufferOptions.setPersistBuffer(true);
+        disconnectedBufferOptions.setDeleteOldestMessages(false);
+        return disconnectedBufferOptions;
+    }
+
+    private MqttConnectOptions getMqttConnectionOption() {
+        MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
+
+        mqttConnectOptions.setUserName("uztrfyhg");
+        mqttConnectOptions.setPassword("zN6Oiudz0plw".toCharArray());
+        mqttConnectOptions.setCleanSession(false);
+        //mqttConnectOptions.setAutomaticReconnect(true);
+        //mqttConnectOptions.setWill("aaa", "I am going offlineasd".getBytes(), 1, true);
+        return mqttConnectOptions;
+    }
+
+
 
 
     // Button.OnclickListener를 implements하므로 onClick() 함수를 오버라이딩.
