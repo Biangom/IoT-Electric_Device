@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.DisconnectedBufferOptions;
@@ -46,27 +48,33 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.nameText)
     TextView nameText;
 
-    @BindView(R.id.resultText)
-    TextView resultText;
 
 
 
-    @BindView(R.id.sendButton)
-    Button sendButton;
+    @BindView(R.id.logViewBtn)
+    Button logViewBtn;
+
     @BindView(R.id.button2)
     Button button2;
     @BindView(R.id.connectTry)
     Button connectTry;
+    @BindView(R.id.resultText)
+    TextView resultText;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private LogTextAdapter mAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //recyclerView = (RecyclerView) findViewById(R.id.log_item_recycler_view);
+
         ButterKnife.bind(this);
         //resultView = findViewById(R.id.resultView);
     }
-
 
 
     @Override
@@ -75,10 +83,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.sendButton, R.id.button2, R.id.connectTry})
+    @OnClick({R.id.logViewBtn, R.id.button2, R.id.connectTry})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.sendButton:
+            case R.id.logViewBtn:
+
+
+//
+//                // use this setting to improve performance if you know that changes
+//                // in content do not change the layout size of the RecyclerView
+//                recyclerView.setHasFixedSize(true);
+//
+//                // use a linear layout manager
+//                layoutManager = new LinearLayoutManager(this);
+//                recyclerView.setLayoutManager(layoutManager);
+//
+//                // specify an adapter (see also next example)
+//                String[] myDataset = {"Test1","Test2"};
+//                mAdapter = new LogTextAdapter(myDataset);
+//                recyclerView.setAdapter(mAdapter);
+
+
+                Intent intent = new Intent(MainActivity.this, LogRecycleView.class);
+                startActivity(intent);
+
                 break;
             case R.id.button2:
                 break;
@@ -179,8 +207,6 @@ public class MainActivity extends AppCompatActivity {
         //mqttConnectOptions.setWill("aaa", "I am going offlineasd".getBytes(), 1, true);
         return mqttConnectOptions;
     }
-
-
 
 
     // Button.OnclickListener를 implements하므로 onClick() 함수를 오버라이딩.
@@ -373,7 +399,6 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
 //    }
-
 
 
 }

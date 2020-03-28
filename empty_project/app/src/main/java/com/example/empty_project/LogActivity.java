@@ -33,8 +33,6 @@ public class LogActivity extends AppCompatActivity {
 
     @BindView(R.id.logText)
     TextView logText;
-    @BindView(R.id.textView)
-    TextView textView;
 
 
     @BindView(R.id.textView1)
