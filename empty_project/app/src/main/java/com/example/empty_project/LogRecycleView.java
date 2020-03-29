@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class LogRecycleView extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -27,8 +29,11 @@ public class LogRecycleView extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        String[] myDataset = {"Test1","Test2"};
-        mAdapter = new LogTextAdapter(myDataset);
+        ArrayList<Data> list = new ArrayList<>();
+        list.add(new Data("kss","1"));
+        list.add(new Data("pss","2"));
+
+        mAdapter = new LogTextAdapter(list);
         recyclerView.setAdapter(mAdapter);
     }
 }
