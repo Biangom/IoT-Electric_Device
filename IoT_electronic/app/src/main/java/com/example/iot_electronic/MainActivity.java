@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,10 +34,11 @@ public class MainActivity extends AppCompatActivity {
     TextView resultText;
 
     // 연결할 클라이언트
-    private Client connectClient;
+    public Client connectClient;
 
     // mqtt 접속을 위한 클라이언트
-    private MqttAndroidClient mqttAndroidClient;
+    MqttAndroidClient mqttAndroidClient;
+    IMqttToken token;
 
 
     @Override
@@ -54,17 +56,13 @@ public class MainActivity extends AppCompatActivity {
                 InputServerDialogBox newFragment = new InputServerDialogBox();
                 newFragment.show(getSupportFragmentManager(), "dialog"); //"dialog"라는 태그를 갖는 프래그먼트를 보여준다.
                 newFragment.setDialogResult(new InputServerDialogBox.OnCompleteListener() {
-
-
                     @Override
                     public void onInputedData(Client client) {
                         // 서버랑 연결 시도할거임
                         connectClient = client;
+                        int ret = connectSerever(client.getClientId(), client.getIp(), client.getPort());
                     }
-
                 });
-
-                int ret = conenctSerever(connectClient.getClientId(), connectClient.getIp(), connectClient.getPort());
 
 //                AlertDialog.Builder builder = new AlertDialog.Builder();
 //                AlertDialog alertDialog = builder.create();
@@ -72,13 +70,22 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.signalView:
+                // 연결이 되었을 때만 실행
+                if(mqttAndroidClient == null || !mqttAndroidClient.isConnected()) {
+                    Toast.makeText(getApplicationContext(), "서버와 연결이 되지 않아 조회할 수 없습니다.",Toast.LENGTH_SHORT).show();
+                }
+                else {
 
-
+                }
                 break;
         }
     }
 
-    private int conenctSerever(String clientId, String ip, String port) {
+    private int connectSerever(String clientId, String ip, String port) {
+
+
+
+        Log.d("##############","Connect Try!!");
 
         //String url = "tcp://" + ipText.getText();
         ip = "tcp://m16.cloudmqtt.com";
@@ -87,44 +94,60 @@ public class MainActivity extends AppCompatActivity {
         port = "14593";
 
         // String clientId = nameText.getText().toString();
-//        clientId = "uztrfyhg";
-        clientId = "test"
+        clientId = "uztrfyhg";
 
+        Log.d(" ",ip + ":" + port + clientId);
+
+        Log.d("S1", "conenctSerever: Step1");
         mqttAndroidClient = new MqttAndroidClient(this,
-                url + ":" + port,
+                ip + ":" + port,
                 clientId);
+        Log.d("S1", "conenctSerever: Step2");
         try {
-            IMqttToken token = mqttAndroidClient.connect(getMqttConnectionOption());    //mqtttoken 이라는것을 만들어 connect option을 달아줌
+            // mqttAndroidCleint를 통해 연결 시도. 인자값은 연결옵션값
+            // 연결이 시도되면 토큰을 반환한다.
+            token = mqttAndroidClient.connect(getMqttConnectionOption());
+            if(mqttAndroidClient.isConnected()) {
+                Log.d("S1", "conenctSerever: Connected");
+            }
+            else {
+                Log.d("S1", "conenctSerever: Disconnected");
+            }
+            Log.d("S1", "conenctSerever: Step3");
             token.setActionCallback(new IMqttActionListener() {
+                // 해당 토근에 대한 Listener 정의
                 @Override
                 public void onSuccess(IMqttToken asyncActionToken) {
                     mqttAndroidClient.setBufferOpts(getDisconnectedBufferOptions());    //연결에 성공한경우
-                    Log.e("Connect_success", "Success");
+                    Log.e("Connect_success", "#### Success");
+                    resultText.setText("서버와 연결이 되었습니다.");
                     // Intent intent = new Intent(MainActivity.this, LogActivity.class);
                     // 그쪽으로 가게 하기
 
-
-                    try {
-                        mqttAndroidClient.subscribe("kss", 0);   //연결에 성공하면 jmlee 라는 토픽으로 subscribe함
-                        //startActivity(intent);
-                    } catch (MqttException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        mqttAndroidClient.subscribe("kss", 0);   //연결에 성공하면 jmlee 라는 토픽으로 subscribe함
+//                        //startActivity(intent);
+//                    } catch (MqttException e) {
+//                        e.printStackTrace();
+//                    }
                 }
 
                 @Override
                 public void onFailure(IMqttToken asyncActionToken, Throwable exception) {   //연결에 실패한경우
-                    Log.e("connect_fail", "Failure " + exception.toString());
-                    resultText.setText("Connect fail!");
+                    Log.e("connect_fail", "##### Failure " + exception.toString());
+                    resultText.setText("서버와 연결을 하지 못했습니다.");
                 }
             });
+            Log.d("S1", "conenctSerever: Step4");
 
-        } catch (
-                MqttException e) {
+        } catch ( MqttException e) {
             e.printStackTrace();
+            Log.e("connect faile","############# Execpet");
         }
+        Log.d("S1", "conenctSerever: Step5");
 
-        mqttAndroidClient.setCallback(new MqttCallback() {  //클라이언트의 콜백을 처리하는부분
+        // 메시지가 도달할때 처리하는 로직 정의
+        mqttAndroidClient.setCallback(new MqttCallback() {
             @Override
             public void connectionLost(Throwable cause) {
             }
@@ -142,9 +165,7 @@ public class MainActivity extends AppCompatActivity {
             public void deliveryComplete(IMqttDeliveryToken token) {
             }
         });
-
-        resultText.setText("Connect fail! (end)");
-
+        return 0;
     }
 
     private DisconnectedBufferOptions getDisconnectedBufferOptions() {
