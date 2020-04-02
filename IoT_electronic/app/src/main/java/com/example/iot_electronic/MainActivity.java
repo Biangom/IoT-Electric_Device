@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "서버와 연결이 되지 않아 조회할 수 없습니다.",Toast.LENGTH_SHORT).show();
                 }
                 else {
-
+                    Intent intent = new Intent(MainActivity.this, LogRecycleView.class);
+                    startActivity(intent);
                 }
                 break;
         }
