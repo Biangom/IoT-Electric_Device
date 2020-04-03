@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public Client connectClient;
 
     // mqtt 접속을 위한 클라이언트
-    MqttAndroidClient mqttAndroidClient;
+    static MqttAndroidClient mqttAndroidClient;
     IMqttToken token;
 
 
@@ -104,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
                 ip + ":" + port,
                 clientId);
         Log.d("S1", "conenctSerever: Step2");
+
+
+        // 토큰 사실 잘모르겠따.. 일단 OK
+
         try {
             // mqttAndroidCleint를 통해 연결 시도. 인자값은 연결옵션값
             // 연결이 시도되면 토큰을 반환한다.
@@ -125,12 +129,16 @@ public class MainActivity extends AppCompatActivity {
                     // Intent intent = new Intent(MainActivity.this, LogActivity.class);
                     // 그쪽으로 가게 하기
 
-//                    try {
-//                        mqttAndroidClient.subscribe("kss", 0);   //연결에 성공하면 jmlee 라는 토픽으로 subscribe함
-//                        //startActivity(intent);
-//                    } catch (MqttException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        // 테스트를 위해 등록하기
+                        mqttAndroidClient.subscribe("devs/DEV1", 0);
+                        mqttAndroidClient.subscribe("devs/DEV2", 0);
+                        mqttAndroidClient.subscribe("devs/DEV3", 0);
+                        mqttAndroidClient.subscribe("devs/DEV4", 0);
+                        //startActivity(intent);
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override
@@ -147,25 +155,36 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.d("S1", "conenctSerever: Step5");
 
-        // 메시지가 도달할때 처리하는 로직 정의
-        mqttAndroidClient.setCallback(new MqttCallback() {
-            @Override
-            public void connectionLost(Throwable cause) {
-            }
-
-            @Override
-            public void messageArrived(String topic, MqttMessage message) throws Exception {    //모든 메시지가 올때 Callback method
-                if (topic.equals("jmlee")) {     //topic 별로 분기처리하여 작업을 수행할수도있음
-                    String msg = new String(message.getPayload());
-                    //resultView.setText(msg);
-                    Log.e("arrive message : ", msg);
-                }
-            }
-
-            @Override
-            public void deliveryComplete(IMqttDeliveryToken token) {
-            }
-        });
+//        // 메시지가 도달할때 처리하는 로직 정의
+//        // 이 함수들이 중요함.
+//        mqttAndroidClient.setCallback(new MqttCallback() {
+//            @Override
+//            public void connectionLost(Throwable cause) {
+//            }
+//
+//            @Override
+//            public void messageArrived(String topic, MqttMessage message) throws Exception {    //모든 메시지가 올때 Callback method
+//                if (topic.equals("devs/DEV1")) {     //topic 별로 분기처리하여 작업을 수행할수도있음
+//                    String msg = new String(message.getPayload());
+//                    //resultView.setText(msg);
+//                    Log.e("arrive message : ", msg);
+//                }
+//                else if(topic.equals("devs/DEV2")){
+//
+//                }
+//                else if(topic.equals("devs/DEV3")){
+//
+//                }
+//                else if(topic.equals("devs/DEV4")){
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void deliveryComplete(IMqttDeliveryToken token) {
+//            }
+//        });
         return 0;
     }
 
