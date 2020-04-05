@@ -135,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
                         mqttAndroidClient.subscribe("devs/DEV2", 0);
                         mqttAndroidClient.subscribe("devs/DEV3", 0);
                         mqttAndroidClient.subscribe("devs/DEV4", 0);
+                        mqttAndroidClient.subscribe("devs/DEV5", 0);
+                        mqttAndroidClient.subscribe("devs/DEV6", 0);
+                        mqttAndroidClient.subscribe("devs/DEV7", 0);
+                        mqttAndroidClient.subscribe("devs/DEV8", 0);
                         //startActivity(intent);
                     } catch (MqttException e) {
                         e.printStackTrace();

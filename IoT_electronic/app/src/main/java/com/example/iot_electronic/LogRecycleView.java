@@ -1,11 +1,17 @@
 package com.example.iot_electronic;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +37,8 @@ public class LogRecycleView extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<Data> list;
+    private NotificationManager manager;
+    private NotificationCompat.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,42 @@ public class LogRecycleView extends AppCompatActivity {
         ButterKnife.bind(this);
         recyclerView = (RecyclerView) findViewById(R.id.log_item_recycler_view);
         list = new ArrayList<Data>();
+
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+
+        // 알림 만들기
+        // notification 서비스 갖고오기
+        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(
+                new NotificationChannel("Chanel_id","Chanel_name", NotificationManager.IMPORTANCE_DEFAULT)
+        );
+
+        builder = new NotificationCompat.Builder(this, "Chanel_id");
+
+        // 알림창 제목
+        builder.setContentTitle("알림");
+        // 알림창 메시지
+        builder.setContentText("알림 메시지");
+
+        // 알림창 아이콘
+        builder.setSmallIcon(R.drawable.ic_launcher_background);
+
+        // 알림창 터치시 상단 알림상태에서 알림이 자동으로 삭제되게 합니다.
+        builder.setAutoCancel(true);
+
+        // pandingIntent를 builder에 설정 해줍니다.
+        // 알림창 터치시 인텐트가 전달할 수 있도록 해줍니다.
+        // builder.setContentIntent(pendingIntent);
+
+        Notification notification = builder.build();
+
+
+
+        
+
+
+
 
         // 메시지가 도달할때 처리하는 로직 정의
         // 이 함수들이 중요함.
@@ -59,8 +103,15 @@ public class LogRecycleView extends AppCompatActivity {
                 } else if (topic.equals("devs/DEV4")) {
                     Log.e("arrive message DEV4 : ", msg);
                 }
+                // 알림아이콘 호출
+                manager.notify(1, notification);
+
+                // 진동 호출
+                vibrator.vibrate(1000); // 0.5초간 진동
+
                 Data data = new Data(msg + "name", msg);
                 list.add(data);
+
                 // mAdapter에게 Dataset이 changed() 되었다고 알린다
                 // 그러면 Recycle View가 초기화된다.
                 // 하지만 이러는건 너무 비효율적이다.
