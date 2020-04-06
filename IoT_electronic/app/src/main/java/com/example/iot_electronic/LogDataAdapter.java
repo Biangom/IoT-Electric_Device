@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.LogViewHolder> {
@@ -30,11 +31,17 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.LogViewH
     public static class LogViewHolder extends RecyclerView.ViewHolder {
         public TextView nameText;
         public TextView valueText;
+        public TextView dateText;
+        public TextView timeText;
+
+
         public LogViewHolder(View itemView) {
             super(itemView);
 
             nameText = itemView.findViewById(R.id.nameText);
             valueText = itemView.findViewById(R.id.valueText);
+            dateText = itemView.findViewById(R.id.dateText);
+            timeText = itemView.findViewById(R.id.timeText);
         }
         // each data item is just a string in this case
         //public TextView textView;
@@ -46,6 +53,8 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.LogViewH
         void onBind(Data data) {
             nameText.setText(data.name);
             valueText.setText(data.value);
+            dateText.setText(data.time.format(DateTimeFormatter.ofPattern("MM-dd")));
+            timeText.setText(data.time.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         }
     }
 

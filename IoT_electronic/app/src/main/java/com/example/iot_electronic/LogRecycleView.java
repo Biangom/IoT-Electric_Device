@@ -19,6 +19,7 @@ import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -61,9 +62,12 @@ public class LogRecycleView extends AppCompatActivity {
         builder = new NotificationCompat.Builder(this, "Chanel_id");
 
         // 알림창 제목
-        builder.setContentTitle("알림");
+        // 테스트 용이었음
+        //builder.setContentTitle("알림");
+
         // 알림창 메시지
-        builder.setContentText("알림 메시지");
+        // 이것도 테스트 용이었음
+        //builder.setContentText("알림 메시지");
 
         // 알림창 아이콘
         builder.setSmallIcon(R.drawable.ic_launcher_background);
@@ -71,11 +75,13 @@ public class LogRecycleView extends AppCompatActivity {
         // 알림창 터치시 상단 알림상태에서 알림이 자동으로 삭제되게 합니다.
         builder.setAutoCancel(true);
 
+        builder.setSmallIcon(R.drawable.brand);
+
         // pandingIntent를 builder에 설정 해줍니다.
         // 알림창 터치시 인텐트가 전달할 수 있도록 해줍니다.
         // builder.setContentIntent(pendingIntent);
 
-        Notification notification = builder.build();
+
 
 
 
@@ -94,22 +100,45 @@ public class LogRecycleView extends AppCompatActivity {
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {    //모든 메시지가 올때 Callback method
                 String msg = new String(message.getPayload());
+                String dev = "none";
                 if (topic.equals("devs/DEV1")) {     //topic 별로 분기처리하여 작업을 수행할수도있음
                     Log.e("arrive message DEV1 : ", msg);
+                    dev = "DEV1";
                 } else if (topic.equals("devs/DEV2")) {
                     Log.e("arrive message DEV2 : ", msg);
+                    dev = "DEV2";
                 } else if (topic.equals("devs/DEV3")) {
                     Log.e("arrive message DEV3 : ", msg);
+                    dev = "DEV3";
                 } else if (topic.equals("devs/DEV4")) {
                     Log.e("arrive message DEV4 : ", msg);
+                    dev = "DEV4";
+                } else if (topic.equals("devs/DEV5")) {
+                    Log.e("arrive message DEV4 : ", msg);
+                    dev = "DEV5";
+                } else if (topic.equals("devs/DEV6")) {
+                    Log.e("arrive message DEV4 : ", msg);
+                    dev = "DEV6";
+                } else if (topic.equals("devs/DEV7")) {
+                    Log.e("arrive message DEV4 : ", msg);
+                    dev = "DEV7";
+                } else if (topic.equals("devs/DEV8")) {
+                    Log.e("arrive message DEV4 : ", msg);
+                    dev = "DEV8";
+                } else{
+                    return;
                 }
                 // 알림아이콘 호출
-                manager.notify(1, notification);
+                builder.setContentTitle(dev);
+                builder.setContentText(msg);
+                Notification notification = builder.build();
+                manager.notify(1, notification); // id는 channel임
+
 
                 // 진동 호출
                 vibrator.vibrate(1000); // 0.5초간 진동
 
-                Data data = new Data(msg + "name", msg);
+                Data data = new Data(dev, msg, LocalDateTime.now());
                 list.add(data);
 
                 // mAdapter에게 Dataset이 changed() 되었다고 알린다
