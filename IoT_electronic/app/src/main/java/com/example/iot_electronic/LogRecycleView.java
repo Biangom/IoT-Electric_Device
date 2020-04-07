@@ -9,6 +9,7 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -33,6 +34,8 @@ public class LogRecycleView extends AppCompatActivity {
     Button settingBtn;
     @BindView(R.id.log_item_recycler_view)
     RecyclerView logItemRecyclerView;
+    @BindView(R.id.alarmSwtich)
+    Switch alarmSwtich;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -54,12 +57,16 @@ public class LogRecycleView extends AppCompatActivity {
 
         // 알림 만들기
         // notification 서비스 갖고오기
-        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.createNotificationChannel(
-                new NotificationChannel("Chanel_id","Chanel_name", NotificationManager.IMPORTANCE_DEFAULT)
-        );
+        NotificationChannel notificationChannel = new NotificationChannel("Chanel_id_1", "Chanel_name", NotificationManager.IMPORTANCE_DEFAULT);
+        notificationChannel
+                // 26 이상부터는 이것을 해주어야함.
+                .setVibrationPattern(new long[]{1000, 1000});
 
-        builder = new NotificationCompat.Builder(this, "Chanel_id");
+        manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(notificationChannel);
+
+
+        builder = new NotificationCompat.Builder(this, "Chanel_id_1");
 
         // 알림창 제목
         // 테스트 용이었음
@@ -80,14 +87,6 @@ public class LogRecycleView extends AppCompatActivity {
         // pandingIntent를 builder에 설정 해줍니다.
         // 알림창 터치시 인텐트가 전달할 수 있도록 해줍니다.
         // builder.setContentIntent(pendingIntent);
-
-
-
-
-
-        
-
-
 
 
         // 메시지가 도달할때 처리하는 로직 정의
@@ -125,18 +124,29 @@ public class LogRecycleView extends AppCompatActivity {
                 } else if (topic.equals("devs/DEV8")) {
                     Log.e("arrive message DEV4 : ", msg);
                     dev = "DEV8";
-                } else{
+                } else {
                     return;
                 }
                 // 알림아이콘 호출
                 builder.setContentTitle(dev);
                 builder.setContentText(msg);
-                Notification notification = builder.build();
-                manager.notify(1, notification); // id는 channel임
+                // vibrator 함수로 진동을 발생할 수 있지만.
+                // 그것은 백그라운드에서 돌아가지 않는다.
+                // 그래서 Vibrarte를 setting 해준다.
+                //builder.setVibrate(new long[]{1000, 1000}); // 오레오 이상부터는 안먹음
+
+                if(alarmSwtich.isChecked()) {
+                    Notification notification = builder.build();
+                    // 알람 울리기
+                    manager.notify(1, notification); // id는 channel임
+
+                    // 진동 호출
+                    // vibrator.vibrate(1000); // 0.5초간 진동
+                }
 
 
-                // 진동 호출
-                vibrator.vibrate(1000); // 0.5초간 진동
+
+
 
                 Data data = new Data(dev, msg, LocalDateTime.now());
                 list.add(data);
@@ -185,6 +195,18 @@ public class LogRecycleView extends AppCompatActivity {
                 break;
             case R.id.settingBtn:
                 // dialog 뜨게하자.
+
+//                InputServerDialogBox newFragment = new InputServerDialogBox();
+//                newFragment.show(getSupportFragmentManager(), "dialog"); //"dialog"라는 태그를 갖는 프래그먼트를 보여준다.
+//                newFragment.setDialogResult(new InputServerDialogBox.OnCompleteListener() {
+//                    @Override
+//                    public void onInputedData(Client client) {
+//                        // 서버랑 연결 시도할거임
+//                        connectClient = client;
+//                        int ret = connectSerever(client.getClientId(), client.getIp(), client.getPort());
+//                    }
+//                });
+
 
                 break;
         }

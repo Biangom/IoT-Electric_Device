@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:paddingLeft="30dp">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="기기 수신 설정" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="DEV1" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="DEV2" />
+
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="DEV3" />
+
+    <Switch
+        android:id="@+id/switch4"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="DEV4" />
+
+    <Switch
+        android:id="@+id/switch5"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="DEV5" />
+
+    <Switch
+        android:id="@+id/switch6"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="DEV6" />
+
+    <Switch
+        android:id="@+id/switch7"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="DEV7" />
+
+    <Switch
+        android:id="@+id/switch8"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="DEV8" />
+
+</LinearLayout>

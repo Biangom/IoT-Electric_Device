@@ -22,7 +22,7 @@
         android:id="@+id/settingBtn"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:text="원격설정"
+        android:text="기기 수신 설정"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.945"
@@ -41,6 +41,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.101" />
+
+    <Switch
+        android:id="@+id/alarmSwtich"
+        android:layout_width="94dp"
+        android:layout_height="18dp"
+        android:checked="true"
+        android:text="알림 설정"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.112" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
