@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.time.LocalDateTime;
@@ -115,16 +116,16 @@ public class LogRecycleView extends AppCompatActivity {
                     Log.e("arrive message DEV4 : ", msg);
                     dev = "DEV4";
                 } else if (topic.equals("devs/DEV5")) {
-                    Log.e("arrive message DEV4 : ", msg);
+                    Log.e("arrive message DEV5 : ", msg);
                     dev = "DEV5";
                 } else if (topic.equals("devs/DEV6")) {
-                    Log.e("arrive message DEV4 : ", msg);
+                    Log.e("arrive message DEV6 : ", msg);
                     dev = "DEV6";
                 } else if (topic.equals("devs/DEV7")) {
-                    Log.e("arrive message DEV4 : ", msg);
+                    Log.e("arrive message DEV7 : ", msg);
                     dev = "DEV7";
                 } else if (topic.equals("devs/DEV8")) {
-                    Log.e("arrive message DEV4 : ", msg);
+                    Log.e("arrive message DEV8 : ", msg);
                     dev = "DEV8";
                 } else {
                     return;
@@ -189,7 +190,49 @@ public class LogRecycleView extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
+    /**
+     * Fragment로 온 데이터를 바탕으로
+     * 구독 해제/설정
+     * @param mDeviceData
+     * @return
+     */
     private int changeSubscribe(DeviceData mDeviceData) {
+        try {
+            if (!mDeviceData.dev1)
+                mqttAndroidClient.unsubscribe("devs/DEV1");
+            else
+                mqttAndroidClient.subscribe("devs/DEV1",0);
+            if(!mDeviceData.dev2)
+                mqttAndroidClient.unsubscribe("devs/DEV2");
+            else
+                mqttAndroidClient.subscribe("devs/DEV2",0);
+            if(!mDeviceData.dev3)
+                mqttAndroidClient.unsubscribe("devs/DEV3");
+            else
+                mqttAndroidClient.subscribe("devs/DEV3",0);
+            if(!mDeviceData.dev4)
+                mqttAndroidClient.unsubscribe("devs/DEV4");
+            else
+                mqttAndroidClient.subscribe("devs/DEV4",0);
+            if(!mDeviceData.dev5)
+                mqttAndroidClient.unsubscribe("devs/DEV5");
+            else
+                mqttAndroidClient.subscribe("devs/DEV5",0);
+            if(!mDeviceData.dev6)
+                mqttAndroidClient.unsubscribe("devs/DEV6");
+            else
+                mqttAndroidClient.subscribe("devs/DEV6",0);
+            if(!mDeviceData.dev7)
+                mqttAndroidClient.unsubscribe("devs/DEV7");
+            else
+                mqttAndroidClient.subscribe("devs/DEV7",0);
+            if(!mDeviceData.dev8)
+                mqttAndroidClient.unsubscribe("devs/DEV8");
+            else
+                mqttAndroidClient.subscribe("devs/DEV8",0);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
 
         return 0;
     }
