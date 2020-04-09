@@ -44,6 +44,8 @@ public class LogRecycleView extends AppCompatActivity {
     private NotificationManager manager;
     private NotificationCompat.Builder builder;
 
+    DeviceData mDeviceData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,6 +189,11 @@ public class LogRecycleView extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
+    private int changeSubscribe(DeviceData mDeviceData) {
+
+        return 0;
+    }
+
 
     @OnClick({R.id.log_item_recycler_view, R.id.settingBtn})
     public void onViewClicked(View view) {
@@ -196,19 +203,21 @@ public class LogRecycleView extends AppCompatActivity {
             case R.id.settingBtn:
                 // dialog 뜨게하자.
 
-//                InputServerDialogBox newFragment = new InputServerDialogBox();
-//                newFragment.show(getSupportFragmentManager(), "dialog"); //"dialog"라는 태그를 갖는 프래그먼트를 보여준다.
-//                newFragment.setDialogResult(new InputServerDialogBox.OnCompleteListener() {
-//                    @Override
-//                    public void onInputedData(Client client) {
-//                        // 서버랑 연결 시도할거임
-//                        connectClient = client;
-//                        int ret = connectSerever(client.getClientId(), client.getIp(), client.getPort());
-//                    }
-//                });
-
+                InputSettingDialogBox newFragment = new InputSettingDialogBox();
+                newFragment.show(getSupportFragmentManager(), "SettingDialog"); //"dialog"라는 태그를 갖는 프래그먼트를 보여준다.
+                newFragment.setDialogResult(new InputSettingDialogBox.OnCompleteListener() {
+                    @Override
+                    public void onInputedData(DeviceData deviceData) {
+                        // 서버랑 연결 시도할거임
+                        mDeviceData = deviceData;
+                        int ret = changeSubscribe(mDeviceData);
+                    }
+                });
 
                 break;
         }
     }
+
+
+
 }
