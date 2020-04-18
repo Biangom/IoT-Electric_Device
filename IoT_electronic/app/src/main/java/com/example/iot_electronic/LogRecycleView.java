@@ -105,28 +105,28 @@ public class LogRecycleView extends AppCompatActivity {
                 String dev = "none";
                 if (topic.equals("devs/DEV1")) {     //topic 별로 분기처리하여 작업을 수행할수도있음
                     Log.e("arrive message DEV1 : ", msg);
-                    dev = "DEV1";
+                    dev = "1번존";
                 } else if (topic.equals("devs/DEV2")) {
                     Log.e("arrive message DEV2 : ", msg);
-                    dev = "DEV2";
+                    dev = "2번존";
                 } else if (topic.equals("devs/DEV3")) {
                     Log.e("arrive message DEV3 : ", msg);
-                    dev = "DEV3";
+                    dev = "3번존";
                 } else if (topic.equals("devs/DEV4")) {
                     Log.e("arrive message DEV4 : ", msg);
-                    dev = "DEV4";
+                    dev = "4번존";
                 } else if (topic.equals("devs/DEV5")) {
                     Log.e("arrive message DEV5 : ", msg);
-                    dev = "DEV5";
+                    dev = "5번존";
                 } else if (topic.equals("devs/DEV6")) {
                     Log.e("arrive message DEV6 : ", msg);
-                    dev = "DEV6";
+                    dev = "6번존";
                 } else if (topic.equals("devs/DEV7")) {
                     Log.e("arrive message DEV7 : ", msg);
-                    dev = "DEV7";
+                    dev = "7번존";
                 } else if (topic.equals("devs/DEV8")) {
                     Log.e("arrive message DEV8 : ", msg);
-                    dev = "DEV8";
+                    dev = "8번존";
                 } else {
                     return;
                 }

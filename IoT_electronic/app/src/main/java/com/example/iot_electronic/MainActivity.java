@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
         port = "14593";
 
         // String clientId = nameText.getText().toString();
-        clientId = "uztrfyhg";
+        clientId = "ksh7858";
+        //clientId = "uztrfyhg";
 
         Log.d(" ",ip + ":" + port + clientId);
 
@@ -204,8 +205,10 @@ public class MainActivity extends AppCompatActivity {
     private MqttConnectOptions getMqttConnectionOption() {
         MqttConnectOptions mqttConnectOptions = new MqttConnectOptions();
 
-        mqttConnectOptions.setUserName("uztrfyhg");
-        mqttConnectOptions.setPassword("zN6Oiudz0plw".toCharArray());
+        //mqttConnectOptions.setUserName("uztrfyhg");
+        mqttConnectOptions.setUserName("ksh7858");
+        //mqttConnectOptions.setPassword("zN6Oiudz0plw".toCharArray());
+        mqttConnectOptions.setPassword("1123".toCharArray());
         mqttConnectOptions.setCleanSession(false);
         //mqttConnectOptions.setAutomaticReconnect(true);
         //mqttConnectOptions.setWill("aaa", "I am going offlineasd".getBytes(), 1, true);

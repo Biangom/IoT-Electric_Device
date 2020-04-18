@@ -15,58 +15,58 @@
     <Switch
         android:id="@+id/switch1"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:checked="true"
-        android:text="DEV1" />
+        android:text="1번존" />
 
     <Switch
         android:id="@+id/switch2"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:checked="true"
-        android:text="DEV2" />
+        android:text="2번존" />
 
     <Switch
         android:id="@+id/switch3"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:checked="true"
-        android:text="DEV3" />
+        android:text="3번존" />
 
     <Switch
         android:id="@+id/switch4"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:checked="true"
-        android:text="DEV4" />
+        android:text="4번존" />
 
     <Switch
         android:id="@+id/switch5"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:checked="true"
-        android:text="DEV5" />
+        android:text="5번존" />
 
     <Switch
         android:id="@+id/switch6"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:checked="true"
-        android:text="DEV6" />
+        android:text="6번존" />
 
     <Switch
         android:id="@+id/switch7"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:checked="true"
-        android:text="DEV7" />
+        android:text="7번존" />
 
     <Switch
         android:id="@+id/switch8"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:checked="true"
-        android:text="DEV8" />
+        android:text="8번존" />
 
     <Button
         android:id="@+id/completeBtn"

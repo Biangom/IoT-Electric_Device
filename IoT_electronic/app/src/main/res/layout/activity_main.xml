@@ -12,7 +12,7 @@
         android:layout_height="93dp"
         android:text="스마트 현대화 시스템"
         android:textAlignment="center"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
