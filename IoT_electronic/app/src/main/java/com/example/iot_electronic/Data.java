@@ -1,8 +1,9 @@
 package com.example.iot_electronic;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Data {
+public class Data implements Serializable {
     String name;
     String value;
     LocalDateTime time;

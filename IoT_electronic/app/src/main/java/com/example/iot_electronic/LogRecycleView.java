@@ -21,6 +21,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -47,6 +48,17 @@ public class LogRecycleView extends AppCompatActivity {
 
     DeviceData mDeviceData;
 
+    TextFileManager tfm;
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tfm = new TextFileManager();
+        list = tfm.load();
+        mAdapter.notifyDataSetChanged();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +81,7 @@ public class LogRecycleView extends AppCompatActivity {
         manager.createNotificationChannel(notificationChannel);
 
 
+        // 알림 창 어떤 내용 보일지 설정
         builder = new NotificationCompat.Builder(this, "Chanel_id_1");
 
         // 알림창 제목
@@ -130,13 +143,14 @@ public class LogRecycleView extends AppCompatActivity {
                 } else {
                     return;
                 }
+
                 // 알림아이콘 호출
                 builder.setContentTitle(dev);
                 builder.setContentText(msg);
                 // vibrator 함수로 진동을 발생할 수 있지만.
                 // 그것은 백그라운드에서 돌아가지 않는다.
                 // 그래서 Vibrarte를 setting 해준다.
-                //builder.setVibrate(new long[]{1000, 1000}); // 오레오 이상부터는 안먹음
+                // builder.setVibrate(new long[]{1000, 1000}); // 오레오 이상부터는 안먹음
 
                 if(alarmSwtich.isChecked()) {
                     Notification notification = builder.build();
@@ -147,12 +161,9 @@ public class LogRecycleView extends AppCompatActivity {
                     // vibrator.vibrate(1000); // 0.5초간 진동
                 }
 
-
-
-
-
                 Data data = new Data(dev, msg, LocalDateTime.now());
                 list.add(data);
+                tfm.save(data);
 
                 // mAdapter에게 Dataset이 changed() 되었다고 알린다
                 // 그러면 Recycle View가 초기화된다.

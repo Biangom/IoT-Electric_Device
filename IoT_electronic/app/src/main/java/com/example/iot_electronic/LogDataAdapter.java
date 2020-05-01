@@ -79,11 +79,8 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.LogViewH
         holder.onBind(listData.get(position));
     }
 
-
     @Override
     public int getItemCount() {
         return listData.size();
     }
 }
-
-

@@ -83,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private int connectSerever(String clientId, String ip, String port) {
-
-
-
         Log.d("##############","Connect Try!!");
 
         //String url = "tcp://" + ipText.getText();
