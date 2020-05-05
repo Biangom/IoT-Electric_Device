@@ -34,7 +34,6 @@ public class LogDataAdapter extends RecyclerView.Adapter<LogDataAdapter.LogViewH
         public TextView dateText;
         public TextView timeText;
 
-
         public LogViewHolder(View itemView) {
             super(itemView);
 

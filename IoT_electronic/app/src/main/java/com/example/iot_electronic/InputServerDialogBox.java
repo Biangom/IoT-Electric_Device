@@ -62,6 +62,10 @@ public class InputServerDialogBox extends DialogFragment {
         ipInputText = (EditText) view.findViewById(R.id.ipInputText);
         portInputText = (EditText) view.findViewById(R.id.portInputText);
 
+        nameInputText.setText("");
+        ipInputText.setText("m16.cloudmqtt.com");
+        portInputText.setText("14593");
+
 
         // '닫기' 기능해 해당하는 버튼을 눌렀을 때
         //  실행되는 로직 정의
