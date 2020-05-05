@@ -1,6 +1,8 @@
 package com.example.iot_electronic;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.DisconnectedBufferOptions;
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        checkPermission();
     }
 
     @OnClick({R.id.connectTry, R.id.signalView})
@@ -86,22 +91,28 @@ public class MainActivity extends AppCompatActivity {
         Log.d("##############","Connect Try!!");
 
         //String url = "tcp://" + ipText.getText();
-        ip = "tcp://m16.cloudmqtt.com";
+        //ip = "tcp://" + ipText.getText();
 
-        //String port = portText.getText().toString();
-        port = "14593";
+        ip = ip.substring(5, ip.length()-1);
+        //ip = "tcp://m16.cloudmqtt.com";
+        Log.d("SEONGSIK","ip : " + ip);
 
-        // String clientId = nameText.getText().toString();
-        clientId = "ksh7858";
+        //port = portText.getText().toString();
+        //port = "14593";
+        Log.d("SEONGSIK","port : " + port);
+
+        //clientId = nameText.getText().toString();
+        //clientId = "ksh7858";
         //clientId = "uztrfyhg";
+        Log.d("SEONGSIK","client id : " + clientId);
 
-        Log.d(" ",ip + ":" + port + clientId);
+        Log.d("SEONGSIK",ip + ":" + port + clientId);
 
-        Log.d("S1", "conenctSerever: Step1");
+        Log.d("SEONGSIK", "conenctSerever: Step1");
         mqttAndroidClient = new MqttAndroidClient(this,
                 ip + ":" + port,
                 clientId);
-        Log.d("S1", "conenctSerever: Step2");
+        Log.d("SEONGSIK", "conenctSerever: Step2");
 
 
         // 토큰 사실 잘모르겠따.. 일단 OK
@@ -210,5 +221,61 @@ public class MainActivity extends AppCompatActivity {
         //mqttConnectOptions.setAutomaticReconnect(true);
         //mqttConnectOptions.setWill("aaa", "I am going offlineasd".getBytes(), 1, true);
         return mqttConnectOptions;
+    }
+
+    // [파일입출력] 파일권한 퍼미션 요청
+    public void checkPermission(){
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
+
+
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        2);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
     }
 }

@@ -53,10 +53,17 @@ public class LogRecycleView extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
         super.onResume();
-        tfm = new TextFileManager();
-        list = tfm.load();
-        mAdapter.notifyDataSetChanged();
+        /*
+        tfm = new TextFileManager(this);
+        // 항상이거해줘야함..
+        ArrayList<Data> downList = tfm.load();
+        if(downList != null) {
+            list = downList;
+            mAdapter.notifyDataSetChanged();
+        }
+        */
     }
 
     @Override
