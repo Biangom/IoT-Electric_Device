@@ -1,4 +1,4 @@
-package com.example.iot_electronic;
+package com.kss.iot_electronic;
 
 import android.view.LayoutInflater;
 import android.view.View;
