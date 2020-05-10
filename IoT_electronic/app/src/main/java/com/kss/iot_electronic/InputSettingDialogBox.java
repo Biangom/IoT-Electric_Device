@@ -1,19 +1,15 @@
-package com.example.iot_electronic;
+package com.kss.iot_electronic;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Switch;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
-import butterknife.OnClick;
 
 public class InputSettingDialogBox extends DialogFragment {
 

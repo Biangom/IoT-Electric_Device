@@ -1,7 +1,6 @@
-package com.example.iot_electronic;
+package com.kss.iot_electronic;
 
 import android.content.Context;
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.EOFException;
@@ -10,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.iot_electronic;
+package com.kss.iot_electronic;
 
 import android.Manifest;
 import android.content.Intent;
@@ -17,12 +17,9 @@ import androidx.core.content.ContextCompat;
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.DisconnectedBufferOptions;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,8 +90,9 @@ public class MainActivity extends AppCompatActivity {
         //String url = "tcp://" + ipText.getText();
         //ip = "tcp://" + ipText.getText();
 
-        ip = ip.substring(5, ip.length()-1);
+        //ip = ip.substring(5, ip.length());
         //ip = "tcp://m16.cloudmqtt.com";
+        ip = "tcp://" + ip;
         Log.d("SEONGSIK","ip : " + ip);
 
         //port = portText.getText().toString();

@@ -1,4 +1,4 @@
-package com.example.iot_electronic;
+package com.kss.iot_electronic;
 
 public class DeviceData {
     boolean dev1;

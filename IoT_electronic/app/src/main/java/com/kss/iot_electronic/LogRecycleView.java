@@ -1,4 +1,4 @@
-package com.example.iot_electronic;
+package com.kss.iot_electronic;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -21,7 +21,6 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -29,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.example.iot_electronic.MainActivity.mqttAndroidClient;
+import static com.kss.iot_electronic.MainActivity.mqttAndroidClient;
 
 public class LogRecycleView extends AppCompatActivity {
     @BindView(R.id.settingBtn)
@@ -170,7 +169,7 @@ public class LogRecycleView extends AppCompatActivity {
 
                 Data data = new Data(dev, msg, LocalDateTime.now());
                 list.add(data);
-                tfm.save(data);
+                //tfm.save(data);
 
                 // mAdapter에게 Dataset이 changed() 되었다고 알린다
                 // 그러면 Recycle View가 초기화된다.
